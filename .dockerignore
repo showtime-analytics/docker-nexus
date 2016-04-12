@@ -1,0 +1,6 @@
+version
+*.iml
+.idea
+.editorconfig
+.gitignore
+
