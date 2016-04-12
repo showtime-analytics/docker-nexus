@@ -11,7 +11,7 @@ docker build -t showtimeanalytics/nexus:<version> .
 
 ## Versions
 
-- `2.12.1-01` [(Dockerfile)](https://github.com/showtimeanalytics/nexus/blob/master/Dockerfile)
+- `2.12.1-01` [(Dockerfile)](https://github.com/showtimeanalytics/docker-nexus/blob/master/Dockerfile)
 
 ## Usage
 

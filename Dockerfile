@@ -21,23 +21,19 @@ RUN SERVICE_RELEASE=nexus-${SERVICE_VERSION} \
   && addgroup -g ${SERVICE_GID} ${SERVICE_GROUP} \
   && adduser -g "${SERVICE_NAME} user" -D -h ${SERVICE_WORK} -G ${SERVICE_GROUP} -s /sbin/nologin -u ${SERVICE_UID} ${SERVICE_USER}
 
-ADD root /
-RUN chmod +x ${SERVICE_HOME}/bin/*.sh ${SERVICE_HOME}/bin/nexus \
-  && chown -R ${SERVICE_USER}:${SERVICE_GROUP} ${SERVICE_HOME} ${SERVICE_WORK}
+RUN chown -R ${SERVICE_USER}:${SERVICE_GROUP} ${SERVICE_HOME} ${SERVICE_WORK}
 
 USER $SERVICE_USER
 WORKDIR $SERVICE_HOME
 
 EXPOSE 8081
-# Ready to use as a service including files from "root" to "/" and using a monitoring process like monit
-#CMD ["/opt/sonatype/nexus/bin/nexus-service.sh", "start"]
-
 
 ENV CONTEXT_PATH /
 ENV MAX_HEAP 768m
 ENV MIN_HEAP 256m
 ENV JAVA_OPTS -server -Djava.net.preferIPv4Stack=true
 ENV LAUNCHER_CONF ./conf/jetty.xml ./conf/jetty-requestlog.xml
+
 CMD ${JAVA_HOME}/bin/java \
   -Dnexus-work=${SERVICE_WORK} -Dnexus-webapp-context-path=${CONTEXT_PATH} \
   -Xms${MIN_HEAP} -Xmx${MAX_HEAP} \
